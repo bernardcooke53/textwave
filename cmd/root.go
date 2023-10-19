@@ -125,7 +125,6 @@ func textwaveMain(cmd *cobra.Command, args []string) {
 		}
 		inputText = stdin
 	}
-	fmt.Println(inputText)
 
 	waveMaker := wave.WaveMaker{
 		SpongebobMocking: rootCmdOptions.SpongebobMocking && !rootCmdOptions.AllCaps,
@@ -134,8 +133,7 @@ func textwaveMain(cmd *cobra.Command, args []string) {
 		NumberOfColumns:  rootCmdOptions.NumberOfColumns,
 	}
 
-	lines, err := waveMaker.MakeWave(inputText)
-	cobra.CheckErr(err)
+	lines := waveMaker.MakeWave(inputText)
 
 	for _, line := range lines {
 		fmt.Println(line)

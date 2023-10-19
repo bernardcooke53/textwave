@@ -25,27 +25,24 @@ type WaveMaker struct {
 	NumberOfColumns int
 }
 
-func (w *WaveMaker) MakeWave(str string) ([]string, error) {
+func (w *WaveMaker) MakeWave(str string) []string {
 	var NumberOfColumns int
 	if w.NumberOfColumns > 0 {
 		NumberOfColumns = w.NumberOfColumns
 	} else {
-		maxWordLen, err := maxWordLen(str)
-		if err != nil {
-			return []string{}, err
-		}
+		maxWordLen := maxWordLen(str)
 		NumberOfColumns = int(math.Floor(float64(maxWordLen / 2)))
 	}
 
 	processedChars := w.preprocessChars(str)
 
-	lines := make([]string, len(processedChars))
+	lines := make([]string, 0)
 
 	for index, char := range processedChars {
 		indent := w.makeIndent(index, NumberOfColumns)
 		lines = append(lines, fmt.Sprintf("%s%c", indent, char))
 	}
-	return lines, nil
+	return lines
 }
 
 func (w *WaveMaker) preprocessChars(str string) string {
@@ -100,10 +97,10 @@ func (w *WaveMaker) makeIndent(index, NumberOfColumns int) string {
 	return strings.Repeat(" ", indentLevel*w.ColumnSize)
 }
 
-func maxWordLen(str string) (int, error) {
+func maxWordLen(str string) int {
 	fields := strings.Fields(str)
 	fieldLengths := arrayMap(fields, func(s string) int { return len(s) })
-	return slices.Max(fieldLengths), nil
+	return slices.Max(fieldLengths)
 }
 
 func arrayMap[T, R any](it []T, f func(T) R) []R {
