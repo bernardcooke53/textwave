@@ -31,7 +31,7 @@ func (w *WaveMaker) MakeWave(str string) []string {
 		NumberOfColumns = w.NumberOfColumns
 	} else {
 		maxWordLen := maxWordLen(str)
-		NumberOfColumns = int(math.Floor(float64(maxWordLen / 2)))
+		NumberOfColumns = int(float64(maxWordLen / 2))
 	}
 
 	processedChars := w.preprocessChars(str)
@@ -67,7 +67,7 @@ Loop:
 			builder.WriteRune(char)
 			continue Loop
 		}
-		surprise := rand.Float64() < 0.2
+		surprise := rand.Float64() < 0.2 // #nosec: G404
 
 		// If the last letter was lowercase, 20% chance we write a lowercase letter
 		if unicode.IsLower(rune(str[index-1])) || (unicode.IsSpace(rune(str[index-1])) && index > 1 && unicode.IsLower(rune(str[index-2]))) {

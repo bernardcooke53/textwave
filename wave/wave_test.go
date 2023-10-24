@@ -13,15 +13,14 @@ type maxWordLenTestCase struct {
 }
 
 var maxWordLenTestCases = []maxWordLenTestCase{
-	maxWordLenTestCase{"a b c d", 1},
-	maxWordLenTestCase{"a bc def gh ijk word", 4},
-	maxWordLenTestCase{"punctuation's very tricky", 13},
+	{"a b c d", 1},
+	{"a bc def gh ijk word", 4},
+	{"punctuation's very tricky", 13},
 }
 
 func TestMaxWordLen(t *testing.T) {
 	for nr, testCase := range maxWordLenTestCases {
-		l, err := maxWordLen(testCase.input)
-		assert.Nil(t, err, "Error should not occur")
+		l := maxWordLen(testCase.input)
 		assert.Equal(t, testCase.expected, l, "Case %d failed", nr)
 	}
 }
@@ -32,14 +31,14 @@ type makeIndentTestCase struct {
 }
 
 var makeIndentTestCases = []makeIndentTestCase{
-	makeIndentTestCase{0, 1, ""},
-	makeIndentTestCase{1, 1, " "},
-	makeIndentTestCase{2, 1, ""},
-	makeIndentTestCase{1, 2, " "},
-	makeIndentTestCase{2, 2, "  "},
-	makeIndentTestCase{4, 2, ""},
-	makeIndentTestCase{6, 2, "  "},
-	makeIndentTestCase{6, 5, "    "},
+	{0, 1, ""},
+	{1, 1, " "},
+	{2, 1, ""},
+	{1, 2, " "},
+	{2, 2, "  "},
+	{4, 2, ""},
+	{6, 2, "  "},
+	{6, 5, "    "},
 }
 
 var makeIndentTestCaseColumnSizes = []int{1, 2, 3}

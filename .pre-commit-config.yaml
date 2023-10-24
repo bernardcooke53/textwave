@@ -1,0 +1,64 @@
+---
+default_language_version:
+  python: python3
+  golang: "1.21.3"
+
+repos:
+  # Meta hoks
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: debug-statements
+      - id: detect-aws-credentials
+        args: ["--allow-missing-credentials"]
+      - id: detect-private-key
+      - id: check-case-conflict
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+
+  - repo: https://github.com/segmentio/golines
+    rev: v0.11.0
+    hooks:
+      - id: golines
+
+
+  # install outside this folder by running the following:
+  #
+  # go install golang.org/x/tools/cmd/goimports@latest
+  # go install github.com/orijtech/structslop/cmd/structslop@latest
+  # curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.18.2
+  # go install github.com/mvdan/gofumpt@latest
+  #
+  #
+  - repo: https://github.com/TekWizely/pre-commit-golang
+    rev: v1.0.0-rc.1
+    hooks:
+      - id: go-imports-repo
+      - id: go-fumpt-repo
+        args: [-w]
+      - id: go-mod-tidy-repo
+      - id: go-structslop-repo-mod
+      - id: go-build-repo-mod
+      - id: go-vet-repo-mod
+      - id: go-test-repo-mod
+      - id: go-sec-repo-mod
+
+  # go install https://github.com/golangci-lint
+  - repo: https://github.com/golangci/golangci-lint
+    rev: v1.55.0
+    hooks:
+      - id: golangci-lint-full
+
+  # GHA linting
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: "0.27.0"
+    hooks:
+      - id: check-github-workflows
+      - id: check-dependabot
